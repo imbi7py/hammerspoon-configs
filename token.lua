@@ -6,7 +6,6 @@
 -- Simulate keystrokes for this token value
 
 local gauth = require "gauth"
-local logger = hs.logger.new("token", 5)
 
 -- code is based on:
 --   https://github.com/teunvink/hammerspoon/blob/master/token.lua
@@ -25,9 +24,7 @@ end
 -- read a token seed from keychain, generate a code and make keystrokes for it
 function token_keystroke(token_name)
     local token = password_from_keychain(token_name)
-    logger.d(token)
     local hash = gauth.GenCode(token, math.floor(os.time() / 30))
-    logger.d(hash)
     -- generate keystrokes for the result
     hs.eventtap.keyStrokes(("%06d"):format(hash))
 end
